@@ -1,0 +1,132 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="#">Note Making App</a>
+    <div class="collapse navbar-collapse" id="navbarColor02">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active" style="cursor:pointer">
+                <a class="nav-link" (click)="onSubmit()"><i class="fa fa-pencil" style="margin-top: 4px;"></i>&nbsp;Create<span class="sr-only">(current)</span></a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <a class="navbar-brand" href="#" >Create</a>
+     <button type="button" class="btn btn-xs btn-info" >Create</button>
+    </div> -->
+</nav>
+
+<form #f="ngForm">
+    <div class="wrapper">
+
+        <!-- Sidebar Holder -->
+        <nav id="sidebar">
+            <!-- <div class="sidebar-header">
+          <h3>Bootstrap Sidebar</h3>
+      </div> -->
+            <input type="text" class="form-control" [(ngModel)]="term" name="search" placeholder="Search Notes">
+            &nbsp;<b>Notes List</b>&nbsp;&nbsp;<i class="fa fa-sticky-note"></i>
+            <ul class="list-unstyled components" *ngIf="(todos | async)?.length!=0">
+
+                <li *ngFor="let t of todos | async | filter:term |orderBy:'id':true" class="notes" (click)="setActive(t.id)"
+                    style="cursor:pointer;border: 1px solid white;"
+                     [ngClass]="{'active': activeNote?.id == t.id}">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h5><span class="badge badge-info">{{ t.title }}</span></h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h6>{{ t.description }}</h6>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p> <span class="badge badge-secondary">{{ t.createdTime | date:'mediumTime'}}</span></p>
+                        </div>
+                        <div class="col-md-6" style="margin-top: 9px;">
+                                
+                            <button class="btn btn-danger btn-circle" (click)="removeTodo(t)">
+                        <i class="navbar-toggler-icon fa fa-remove" style="margin-top: 4px;"></i></button>
+                        </div>
+
+                    </div>
+
+
+
+                </li>
+
+            </ul>
+        </nav>
+
+        <!-- Page Content Holder -->
+        <div id="content">
+
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+
+                    <div class="navbar-header">
+                        <button type="button" id="sidebarCollapse"
+                            class="btn btn-info navbar-btn d-block d-sm-block d-md-none">
+                            <!-- <i class="glyphicon glyphicon-align-left"></i> -->
+                            <i class="fa fa-align-left"></i>
+                        </button>
+                    </div>
+
+<!-- 
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="#">Page</a></li>
+                            <li><a href="#">Page</a></li>
+                            <li><a href="#">Page</a></li>
+                            <li><a href="#">Page</a></li>
+                        </ul>
+                    </div> -->
+
+                    <div class="container col-lg-12" id="app" *ngIf="activeNote">
+                        <!-- <input type="text" class="form-control" (ngModelChange)="toggleTodo(noteForm)" name="title" [ngModel]="activeNote?.title" />
+                    <textarea rows="activeNote.description.length" 
+                    name="description"
+                    (ngModelChange)="toggleTodo(noteForm)" [ngModel]="activeNote.description"
+                    #labelRef
+                    class="form-control">
+    
+            </textarea> -->
+                        <div>
+                            <form>
+                                <div class="row">
+                                        <div class="col-md-6">
+                                            <label><b>Title</b></label>
+                                    <div type="text" (input)="toggleTodo({title:$event.target.innerText})"
+                                        contenteditable="true" class="inpStyle form-control">
+                                        {{ activeNote?.title}}</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label><b>Description</b></label>
+                                    <div (input)="toggleTodo({description:$event.target.innerText})"
+                                        contenteditable="true"  class="inpStyle form-control">
+                                        {{ activeNote?.description}}</div>
+                                </div>
+                                </div>
+                            </form>
+
+                        </div>
+
+                        <br />
+                    </div>
+
+
+                </div>
+            </nav>
+
+
+        </div>
+    </div>
+
+    <!--<router-outlet></router-outlet>-->
